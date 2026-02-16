@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💍 EasyWeddings India
 
-## Getting Started
+EasyWeddings is a premium, AI-powered wedding management platform designed for professional planners to coordinate unforgettable celebrations with ease.
 
-First, run the development server:
+## 🚀 Live Environment
+The production site is hosted at **[easyweddings.in](https://easyweddings.in)**.
+
+## ✨ Core Features
+
+- **WhatsApp Guest Assistant**: Automated attendance and logistics collection via Meta Cloud API.
+- **Vendor Marketplace**: A curated catalog of 60+ top-tier venues, decorators, and photographers.
+- **Planner Dashboard**: A centralized command center for tracking RSVPs, vendor payments, and wedding timelines.
+- **Multi-Tenant Readiness**: Each planner has an isolated workspace linked to their account.
+
+## 🛠️ Technology Stack
+
+- **Frontend**: Next.js 14, React, Tailwind CSS
+- **Backend**: Firebase (Authentication & Firestore)
+- **Messaging**: Meta Cloud API (WhatsApp Business)
+- **Deployment**: Vercel
+
+## 📦 Deployment Instructions
+
+1. **Environment Variables**:
+   Ensure the following are configured in your Vercel Dashboard:
+   - `NEXT_PUBLIC_FIREBASE_*` (Config from Firebase Console)
+   - `WHATSAPP_API_TOKEN` (Permanent System User Token)
+   - `WHATSAPP_PHONE_NUMBER_ID`
+   - `WHATSAPP_VERIFY_TOKEN` (Used for webhook verification)
+
+2. **Firebase Auth**:
+   Add `easyweddings.in` to **Authorized Domains** in the Firebase Console.
+
+3. **WhatsApp Webhook**:
+   Configure the callback URL to `https://easyweddings.in/api/whatsapp/webhook` in the Meta Developer Portal.
+
+## 👨‍💻 Local Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
+*Built with ❤️ for the Indian Wedding Industry.*
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
