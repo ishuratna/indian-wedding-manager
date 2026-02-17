@@ -18,8 +18,6 @@ export default function SignupPage() {
         e.preventDefault();
         setError('');
 
-        console.log('Signup Debug - Email:', email, 'PassLen:', password.length, 'ConfPassLen:', confirmPassword.length);
-
         if (password !== confirmPassword) {
             return setError('Passwords do not match.');
         }
