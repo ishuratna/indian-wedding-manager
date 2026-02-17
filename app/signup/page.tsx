@@ -18,6 +18,8 @@ export default function SignupPage() {
         e.preventDefault();
         setError('');
 
+        console.log('Signup Debug - Email:', email, 'PassLen:', password.length, 'ConfPassLen:', confirmPassword.length);
+
         if (password !== confirmPassword) {
             return setError('Passwords do not match.');
         }
@@ -30,6 +32,7 @@ export default function SignupPage() {
             await signup(email, password);
             router.push('/dashboard');
         } catch (err: any) {
+            console.error('Signup error:', err);
             setError(err.message?.includes('email-already-in-use')
                 ? 'This email is already registered. Try logging in.'
                 : 'Something went wrong. Please try again.');

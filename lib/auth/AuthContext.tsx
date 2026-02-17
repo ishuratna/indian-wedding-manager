@@ -44,29 +44,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            setUser(user);
             if (user) {
-                // Ensure a wedding workspace exists for this user
-                const weddingDocRef = doc(db, 'weddings', user.uid);
-                const weddingDoc = await getDoc(weddingDocRef);
+                try {
+                    // Ensure a wedding workspace exists for this user
+                    const weddingDocRef = doc(db, 'weddings', user.uid);
+                    const weddingDoc = await getDoc(weddingDocRef);
 
-                if (!weddingDoc.exists()) {
-                    // Initialize a new workspace for new users
-                    await setDoc(weddingDocRef, {
-                        plannerId: user.uid,
-                        weddingName: `${user.displayName || 'My'} Wedding`,
-                        date: null,
-                        venue: 'TBD',
-                        budget: 1000000, // Default 10L budget
-                        createdAt: serverTimestamp(),
-                        updatedAt: serverTimestamp(),
-                    });
+                    if (!weddingDoc.exists()) {
+                        // Initialize a new workspace for new users
+                        await setDoc(weddingDocRef, {
+                            plannerId: user.uid,
+                            weddingName: `${user.displayName || 'My'} Wedding`,
+                            date: null,
+                            venue: 'TBD',
+                            budget: 1000000, // Default 10L budget
+                            createdAt: serverTimestamp(),
+                            updatedAt: serverTimestamp(),
+                        });
+                    }
+                } catch (err) {
+                    console.error('Workspace Initialization Error:', err);
                 }
 
                 setWeddingId(user.uid);
             } else {
                 setWeddingId(null);
             }
+            setUser(user);
             setLoading(false);
         });
         return unsubscribe;
