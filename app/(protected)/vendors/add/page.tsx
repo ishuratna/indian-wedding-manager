@@ -6,7 +6,7 @@ import { Vendor, VendorCategory, VendorStatus } from '@/app/types/vendor';
 import { useAuth } from '@/lib/auth/AuthContext';
 
 const CATEGORIES: VendorCategory[] = [
-    'Venue', 'Catering', 'Decor', 'Photography', 'Makeup', 'Music/DJ', 'Logistics', 'Mehandi', 'Pandit', 'Other'
+    'Venue', 'Catering', 'Decor', 'Photography', 'Makeup', 'Entertainment', 'Logistics', 'Mehandi', 'Pandit', 'Other'
 ];
 
 const STATUSES: VendorStatus[] = [

@@ -12,7 +12,7 @@ import {
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        console.log('Creating vendor:', body);
+        console.log('[DEBUG] Creating vendor with body:', JSON.stringify(body, null, 2));
 
         if (!body.weddingId || !body.businessName || !body.category) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });

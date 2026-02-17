@@ -21,50 +21,65 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
           {/* Guests */}
           <Link
-            className="group flex flex-col p-8 rounded-2xl border border-slate-100 bg-white shadow-sm transition-all hover:shadow-xl hover:border-blue-100 hover:bg-blue-50/30"
+            className="group flex flex-col p-6 rounded-2xl border border-slate-100 bg-white shadow-sm transition-all hover:shadow-xl hover:border-blue-100 hover:bg-blue-50/30"
             href="/guests"
           >
-            <div className="w-14 h-14 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
+            <div className="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
               👥
             </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-2">Guest Manager</h3>
-            <p className="text-sm text-slate-500 leading-relaxed mb-4">
-              Manage RSVPs, coordinate meal preferences, and track travel logistics for all attendees.
+            <h3 className="text-lg font-bold text-slate-900 mb-2">Guest Manager</h3>
+            <p className="text-xs text-slate-500 leading-relaxed mb-4">
+              Manage RSVPs, coordinate meal preferences, and track travel logistics.
             </p>
-            <span className="text-sm font-semibold text-blue-600">Open Manager →</span>
+            <span className="text-xs font-semibold text-blue-600">Open Manager →</span>
           </Link>
 
           {/* Vendors */}
           <Link
-            className="group flex flex-col p-8 rounded-2xl border border-slate-100 bg-white shadow-sm transition-all hover:shadow-xl hover:border-purple-100 hover:bg-purple-50/30"
+            className="group flex flex-col p-6 rounded-2xl border border-slate-100 bg-white shadow-sm transition-all hover:shadow-xl hover:border-purple-100 hover:bg-purple-50/30"
             href="/vendors"
           >
-            <div className="w-14 h-14 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
+            <div className="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
               📋
             </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-2">My Vendor Board</h3>
-            <p className="text-sm text-slate-500 leading-relaxed mb-4">
-              Track contracts, payments, and deadlines for your hired team of wedding professionals.
+            <h3 className="text-lg font-bold text-slate-900 mb-2">My Vendor Board</h3>
+            <p className="text-xs text-slate-500 leading-relaxed mb-4">
+              Track contracts, payments, and deadlines for your hired professionals.
             </p>
-            <span className="text-sm font-semibold text-purple-600">View Board →</span>
+            <span className="text-xs font-semibold text-purple-600">View Board →</span>
           </Link>
 
           {/* Marketplace */}
           <Link
-            className="group flex flex-col p-8 rounded-2xl border border-slate-100 bg-white shadow-sm transition-all hover:shadow-xl hover:border-rose-100 hover:bg-rose-50/30"
+            className="group flex flex-col p-6 rounded-2xl border border-slate-100 bg-white shadow-sm transition-all hover:shadow-xl hover:border-rose-100 hover:bg-rose-50/30"
             href="/marketplace"
           >
-            <div className="w-14 h-14 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
+            <div className="w-12 h-12 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
               🏪
             </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-2">Vendor Marketplace</h3>
-            <p className="text-sm text-slate-500 leading-relaxed mb-4">
-              Discover and shortlist world-class venues, photographers, and decorators for your clients.
+            <h3 className="text-lg font-bold text-slate-900 mb-2">Marketplace</h3>
+            <p className="text-xs text-slate-500 leading-relaxed mb-4">
+              Discover and shortlist world-class venues and decorators.
             </p>
-            <span className="text-sm font-semibold text-rose-600">Browse Marketplace →</span>
+            <span className="text-xs font-semibold text-rose-600">Browse →</span>
+          </Link>
+
+          {/* Budget */}
+          <Link
+            className="group flex flex-col p-6 rounded-2xl border border-slate-100 bg-white shadow-sm transition-all hover:shadow-xl hover:border-amber-100 hover:bg-amber-50/30"
+            href="/budget"
+          >
+            <div className="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+              💰
+            </div>
+            <h3 className="text-lg font-bold text-slate-900 mb-2">Budget Manager</h3>
+            <p className="text-xs text-slate-500 leading-relaxed mb-4">
+              Centralize financial planning and track payments in real-time.
+            </p>
+            <span className="text-xs font-semibold text-amber-600">Track Budget →</span>
           </Link>
         </div>
 

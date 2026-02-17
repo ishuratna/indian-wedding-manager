@@ -4,7 +4,7 @@ export type VendorCategory =
     | 'Decor'
     | 'Photography'
     | 'Makeup'
-    | 'Music/DJ'
+    | 'Entertainment'
     | 'Logistics'
     | 'Mehandi'
     | 'Pandit'

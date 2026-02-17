@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useAuth } from '@/lib/auth/AuthContext';
 
 export default function ProtectedLayout({ children }: { children: React.ReactNode }) {
@@ -35,15 +36,16 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
             <nav className="bg-white border-b border-slate-100 sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-6">
-                        <a href="/dashboard" className="flex items-center gap-2">
+                        <Link href="/dashboard" className="flex items-center gap-2">
                             <span className="text-2xl">💍</span>
                             <span className="font-bold text-lg text-rose-600 font-serif">EasyWeddings</span>
-                        </a>
-                        <div className="hidden sm:flex items-center gap-4 ml-4">
-                            <a href="/dashboard" className="text-sm font-medium text-slate-600 hover:text-rose-600 transition-colors px-3 py-1.5 rounded-lg hover:bg-rose-50">Dashboard</a>
-                            <a href="/guests" className="text-sm font-medium text-slate-600 hover:text-rose-600 transition-colors px-3 py-1.5 rounded-lg hover:bg-rose-50">Guests</a>
-                            <a href="/marketplace" className="text-sm font-medium text-slate-600 hover:text-rose-600 transition-colors px-3 py-1.5 rounded-lg hover:bg-rose-50">Marketplace</a>
-                            <a href="/vendors" className="text-sm font-medium text-slate-600 hover:text-rose-600 transition-colors px-3 py-1.5 rounded-lg hover:bg-rose-50">My Vendors</a>
+                        </Link>
+                        <div className="flex items-center gap-1 sm:gap-4 ml-2 sm:ml-4 overflow-x-auto no-scrollbar">
+                            <Link href="/dashboard" className="text-xs sm:text-sm font-medium text-slate-600 hover:text-rose-600 transition-colors px-2 sm:px-3 py-1.5 rounded-lg hover:bg-rose-50 whitespace-nowrap">Dashboard</Link>
+                            <Link href="/guests" className="text-xs sm:text-sm font-medium text-slate-600 hover:text-rose-600 transition-colors px-2 sm:px-3 py-1.5 rounded-lg hover:bg-rose-50 whitespace-nowrap">Guests</Link>
+                            <Link href="/marketplace" className="text-xs sm:text-sm font-medium text-slate-600 hover:text-rose-600 transition-colors px-2 sm:px-3 py-1.5 rounded-lg hover:bg-rose-50 whitespace-nowrap">Marketplace</Link>
+                            <Link href="/vendors" className="text-xs sm:text-sm font-medium text-slate-600 hover:text-rose-600 transition-colors px-2 sm:px-3 py-1.5 rounded-lg hover:bg-rose-50 whitespace-nowrap">Vendors</Link>
+                            <Link href="/budget" className="text-xs sm:text-sm font-medium text-slate-600 hover:text-rose-600 transition-colors px-2 sm:px-3 py-1.5 rounded-lg hover:bg-rose-50 whitespace-nowrap">Budget</Link>
                         </div>
                     </div>
                     <UserMenu />

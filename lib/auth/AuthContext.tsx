@@ -10,7 +10,8 @@ import {
     GoogleAuthProvider,
     signOut,
 } from 'firebase/auth';
-import { auth } from '@/lib/firebase/config';
+import { auth, db } from '@/lib/firebase/config';
+import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 interface AuthContextType {
     user: User | null;
@@ -42,11 +43,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [weddingId, setWeddingId] = useState<string | null>(null);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
             setUser(user);
             if (user) {
-                // For now, we use the user's UID as the wedding workspace ID
-                // In a future update, this could be fetched from a user's profile in Firestore
+                // Ensure a wedding workspace exists for this user
+                const weddingDocRef = doc(db, 'weddings', user.uid);
+                const weddingDoc = await getDoc(weddingDocRef);
+
+                if (!weddingDoc.exists()) {
+                    // Initialize a new workspace for new users
+                    await setDoc(weddingDocRef, {
+                        plannerId: user.uid,
+                        weddingName: `${user.displayName || 'My'} Wedding`,
+                        date: null,
+                        venue: 'TBD',
+                        budget: 1000000, // Default 10L budget
+                        createdAt: serverTimestamp(),
+                        updatedAt: serverTimestamp(),
+                    });
+                }
+
                 setWeddingId(user.uid);
             } else {
                 setWeddingId(null);
