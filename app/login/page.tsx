@@ -35,7 +35,8 @@ export default function LoginPage() {
             router.push('/dashboard');
         } catch (err: any) {
             console.error('Google Sign-in Error:', err);
-            setError('Google sign-in failed. Please ensure your account is active and try again.');
+            const msg = err.code ? `[${err.code}] ${err.message}` : (err.message || 'Google sign-in failed. Please try again.');
+            setError(msg);
         }
     }
 
