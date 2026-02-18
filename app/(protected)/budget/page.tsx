@@ -30,20 +30,31 @@ export default function BudgetPage() {
         // Fetch Hired Vendors as Expenses
         const q = query(collection(db, 'vendors'), where('weddingId', '==', weddingId));
         const unsubscribe = onSnapshot(q, (snapshot) => {
-            const vendorExpenses: ExpenseItem[] = snapshot.docs.map(doc => {
-                const data = doc.data();
-                return {
-                    id: doc.id,
-                    title: data.businessName,
-                    category: data.category as BudgetCategoryType,
-                    estimatedCost: data.totalContract || 0,
-                    actualCost: data.totalContract || 0,
-                    paidAmount: data.amountPaid || 0,
-                    status: (data.amountPaid >= data.totalContract && data.totalContract > 0) ? 'Paid' : (data.amountPaid > 0 ? 'Partial' : 'Planned'),
-                    vendorId: doc.id,
-                    updatedAt: data.updatedAt
-                };
-            });
+            const vendorExpenses: ExpenseItem[] = snapshot.docs
+                .map(doc => {
+                    const data = doc.data();
+                    const total = data.paymentTerms?.totalAmount || 0;
+                    const paid = data.paymentTerms?.advancePaid || 0;
+
+                    let status: 'Planned' | 'Partial' | 'Paid' = 'Planned';
+                    if (paid >= total && total > 0) status = 'Paid';
+                    else if (paid > 0) status = 'Partial';
+
+                    return {
+                        id: doc.id,
+                        title: data.businessName,
+                        category: data.category as BudgetCategoryType,
+                        estimatedCost: total,
+                        actualCost: total,
+                        paidAmount: paid,
+                        status,
+                        vendorId: doc.id,
+                        updatedAt: data.updatedAt,
+                        _status: data.status
+                    } as any;
+                })
+                .filter(item => item._status !== 'Shortlisted' && item._status !== 'Contacted');
+
             setExpenses(vendorExpenses);
             setLoading(false);
         });

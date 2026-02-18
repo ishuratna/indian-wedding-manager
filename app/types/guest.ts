@@ -8,7 +8,7 @@ export type Dietary = 'Veg' | 'Non-Veg' | 'Jain' | 'Vegan' | 'Eggetarian';
 export interface Guest {
   id?: string;
   weddingId: string;
-  
+
   // Basic Info
   fullName: string;
   gender?: Gender;
@@ -16,20 +16,29 @@ export interface Guest {
   side: Side;
   group: Group;
   relationship?: string;
-  
+
+  // Headcount for families
+  adults?: number;
+  kids?: number;
+  infants?: number;
+  totalHeadcount?: number;
+
+  // Tracking
+  registrationStage: 'RSVP' | 'DetailsComplete';
+
   // Contact
   phone: string;
   email?: string;
   whatsappOptIn: boolean;
-  
+
   // Attendance
   rsvpStatus: RSVPStatus;
   events: string[]; // Array of event names they are attending
-  
+
   // Dietary & Logistics
   dietaryRestrictions: Dietary[];
   allergies?: string;
-  
+
   // Travel - Arrival field is optional because it might not be known yet
   arrival?: {
     date: string;
@@ -38,7 +47,7 @@ export interface Guest {
     flightNumber?: string;
     pickupRequired: boolean;
   };
-  
+
   // Travel - Departure
   departure?: {
     date: string;
@@ -46,7 +55,7 @@ export interface Guest {
     mode: 'Flight' | 'Train' | 'Car' | 'Bus' | 'Other';
     dropoffRequired: boolean;
   };
-  
+
   // Accommodation
   accommodation?: {
     isRequired: boolean;

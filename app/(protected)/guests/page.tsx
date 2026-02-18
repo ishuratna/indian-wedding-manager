@@ -129,25 +129,32 @@ export default function GuestsPage() {
         {/* Stats Overview */}
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
           <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6 border border-zinc-100">
-            <dt className="truncate text-sm font-medium text-zinc-500">Total Guests</dt>
-            <dd className="mt-1 text-3xl font-semibold tracking-tight text-zinc-900">{guests.length}</dd>
+            <dt className="truncate text-sm font-medium text-zinc-500">Total Guests (Headcount)</dt>
+            <dd className="mt-1 text-3xl font-semibold tracking-tight text-zinc-900">
+              {guests.reduce((acc, g) => acc + (g.totalHeadcount || 0), 0)}
+            </dd>
+            <div className="mt-2 text-xs text-zinc-400 flex gap-2">
+              <span>A: {guests.reduce((acc, g) => acc + (g.adults || 0), 0)}</span>
+              <span>K: {guests.reduce((acc, g) => acc + (g.kids || 0), 0)}</span>
+              <span>I: {guests.reduce((acc, g) => acc + (g.infants || 0), 0)}</span>
+            </div>
           </div>
           <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6 border border-zinc-100">
-            <dt className="truncate text-sm font-medium text-zinc-500">Confirmed</dt>
+            <dt className="truncate text-sm font-medium text-zinc-500">Confirmed RSVPs</dt>
             <dd className="mt-1 text-3xl font-semibold tracking-tight text-green-600">
               {guests.filter(g => g.rsvpStatus === 'Confirmed').length}
             </dd>
           </div>
           <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6 border border-zinc-100">
-            <dt className="truncate text-sm font-medium text-zinc-500">Groom Side</dt>
+            <dt className="truncate text-sm font-medium text-zinc-500">Details Complete</dt>
             <dd className="mt-1 text-3xl font-semibold tracking-tight text-blue-600">
-              {guests.filter(g => g.side === 'Groom').length}
+              {guests.filter(g => g.registrationStage === 'DetailsComplete').length}
             </dd>
           </div>
           <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6 border border-zinc-100">
-            <dt className="truncate text-sm font-medium text-zinc-500">Bride Side</dt>
-            <dd className="mt-1 text-3xl font-semibold tracking-tight text-pink-600">
-              {guests.filter(g => g.side === 'Bride').length}
+            <dt className="truncate text-sm font-medium text-zinc-500">Pending Details</dt>
+            <dd className="mt-1 text-3xl font-semibold tracking-tight text-amber-600">
+              {guests.filter(g => g.rsvpStatus === 'Confirmed' && g.registrationStage === 'RSVP').length}
             </dd>
           </div>
         </div>
@@ -173,40 +180,44 @@ export default function GuestsPage() {
             <ul role="list" className="divide-y divide-zinc-100">
               {guests.map((guest) => (
                 <li key={guest.id} className="flex flex-wrap items-center justify-between gap-x-6 gap-y-4 py-5 sm:flex-nowrap px-6 hover:bg-zinc-50 transition-colors">
-                  <div>
-                    <p className="text-sm font-semibold leading-6 text-zinc-900">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-semibold leading-6 text-zinc-900 flex items-center gap-2">
                       {guest.fullName}
-                      <span className={`ml-2 inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium 
-                                        ${guest.side === 'Groom' ? 'bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-600/20' :
-                          guest.side === 'Bride' ? 'bg-pink-50 text-pink-700 ring-1 ring-inset ring-pink-600/20' :
-                            'bg-zinc-50 text-zinc-600 ring-1 ring-inset ring-zinc-500/10'}`}>
-                        {guest.side}
-                      </span>
-                      <span className={`ml-2 inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium 
+                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium 
                                         ${guest.rsvpStatus === 'Confirmed' ? 'bg-green-50 text-green-700 ring-1 ring-inset ring-green-600/20' :
                           guest.rsvpStatus === 'Declined' ? 'bg-red-50 text-red-700 ring-1 ring-inset ring-red-600/20' :
                             'bg-yellow-50 text-yellow-700 ring-1 ring-inset ring-yellow-600/20'}`}>
                         {guest.rsvpStatus}
                       </span>
+                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium 
+                                        ${guest.registrationStage === 'DetailsComplete' ? 'bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-600/20' :
+                          'bg-zinc-50 text-zinc-600 ring-1 ring-inset ring-zinc-500/10'}`}>
+                        {guest.registrationStage === 'DetailsComplete' ? 'Details Shared' : 'RSVP Only'}
+                      </span>
                     </p>
                     <div className="mt-1 flex items-center gap-x-2 text-xs leading-5 text-zinc-500">
-                      <p>
-                        <span className="font-medium">Group:</span> {guest.group}
-                      </p>
-                      <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
-                        <circle cx={1} cy={1} r={1} />
-                      </svg>
-                      <p>{guest.phone}</p>
-                      <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
-                        <circle cx={1} cy={1} r={1} />
-                      </svg>
-                      <p>{guest.events?.length || 0} Events</p>
+                      <p className="font-medium text-zinc-700">{guest.phone}</p>
+                      <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current"><circle cx={1} cy={1} r={1} /></svg>
+                      <p>Headcount: <span className="font-bold text-zinc-900">{guest.totalHeadcount || 1}</span> (A:{guest.adults || 1}, K:{guest.kids || 0}, I:{guest.infants || 0})</p>
                     </div>
                   </div>
-                  <div className="flex w-full flex-none gap-x-4 sm:w-auto">
-                    <div className="flex flex-col items-end">
-                      <p className="text-sm leading-6 text-zinc-900">{guest.arrival?.mode ? `Arrives by ${guest.arrival.mode}` : 'No arrival info'}</p>
-                      <p className="text-xs leading-5 text-zinc-500">{guest.arrival?.date ? new Date(guest.arrival.date).toLocaleDateString() : '-'}</p>
+
+                  <div className="flex items-center gap-4">
+                    {guest.rsvpStatus === 'Confirmed' && guest.registrationStage === 'RSVP' && (
+                      <button
+                        onClick={() => {
+                          const url = `${window.location.origin}/guests/details/${guest.id}`;
+                          navigator.clipboard.writeText(url);
+                          alert('Details form link copied to clipboard!');
+                        }}
+                        className="text-xs font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors border border-blue-200"
+                      >
+                        Copy Details Link
+                      </button>
+                    )}
+                    <div className="flex flex-col items-end min-w-[120px]">
+                      <p className="text-xs font-medium text-zinc-900">{guest.arrival?.mode ? `Arrives by ${guest.arrival.mode}` : 'Waiting for logistics'}</p>
+                      <p className="text-[10px] text-zinc-500 uppercase tracking-wide">{guest.arrival?.date ? new Date(guest.arrival.date).toLocaleDateString() : 'TBD'}</p>
                     </div>
                   </div>
                 </li>

@@ -32,6 +32,15 @@ export async function POST(request: NextRequest) {
       group: body.group || 'Other',
       relationship: body.relationship || '',
 
+      // Headcount
+      adults: Number(body.adults || 0),
+      kids: Number(body.kids || 0),
+      infants: Number(body.infants || 0),
+      totalHeadcount: Number(body.totalHeadcount || (Number(body.adults || 0) + Number(body.kids || 0) + Number(body.infants || 0))),
+
+      // Registration State
+      registrationStage: body.registrationStage || 'RSVP',
+
       // Attendance
       rsvpStatus: body.rsvpStatus || 'Pending',
       events: body.events || [],
