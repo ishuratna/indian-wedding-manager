@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EasyWeddings – Seamless Planning for Unforgettable Celebrations",
-  description: "The operating system for modern Indian wedding planners. Manage guests, vendors, and logistics from one elegant dashboard.",
+  title: "#Ishanya – A Celebration of Tanya & Ishu",
+  description: "Join us as we celebrate the wedding of Tanya and Ishu. June 19-20, 2026. The Ashok, New Delhi.",
 };
 
 export default function RootLayout({
