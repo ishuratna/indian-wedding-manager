@@ -53,15 +53,15 @@ export const translations = {
         seeYouNote: "See you at the wedding!",
 
         // Landing Page
-        celebrating: "Celebrating",
-        newBeginning: "Our New Beginning.",
+        celebrating: "Celebrating Tanya & Ishu",
+        newBeginning: "Our Beautiful Journey.",
         shareJoy: "Share the Joy with Us",
-        landingSubtitle: "We are so excited to have you join us for our special day. Your presence is the only gift we require.",
+        landingSubtitle: "Celebrate our special day with us at The Ashok, New Delhi. Your presence means everything to us.",
         rsvpNow: "RSVP NOW",
-        journeyTitle: "A Journey of Love",
-        journeyText: "From the first time we met to the moment we decided to spend forever together, every memory has been precious. We can't wait to start this new chapter surrounded by the people we love most.",
-        september: "September 2026",
-        newDelhi: "New Delhi, India"
+        journeyTitle: "Tanya & Ishu",
+        journeyText: "From the first day we met to the moment we decided to spend forever together, every memory has been precious. We can't wait to start this new chapter on June 19-20, 2026, surrounded by our loved ones.",
+        september: "19-20 June 2026",
+        newDelhi: "The Ashok, New Delhi"
     },
     hi: {
         // Common
@@ -117,15 +117,15 @@ export const translations = {
         seeYouNote: "शादी में मिलते हैं!",
 
         // Landing Page
-        celebrating: "जश्न मना रहे हैं",
-        newBeginning: "हमारी नई शुरुआत का।",
+        celebrating: "तान्या और इशु की शादी का जश्न",
+        newBeginning: "हमारा सुंदर सफर।",
         shareJoy: "हमारे साथ खुशियाँ साझा करें",
-        landingSubtitle: "हम अपने विशेष दिन पर आपके शामिल होने को लेकर बहुत उत्साहित हैं। आपकी उपस्थिति ही हमारे लिए सबसे बड़ा उपहार है।",
+        landingSubtitle: "हमारे विशेष दिन पर द अशोक, नई दिल्ली में हमारे साथ शामिल हों। आपकी उपस्थिति ही हमारे लिए सबसे बड़ा उपहार है।",
         rsvpNow: "आरएसवीपी करें",
-        journeyTitle: "प्यार का एक सफर",
-        journeyText: "जब हम पहली बार मिले थे तब से लेकर जब तक हमने साथ बिताने का फैसला किया, हर याद अनमोल है। हम अपने सबसे प्रिय लोगों के बीच इस नए अध्याय को शुरू करने का इंतज़ार नहीं कर सकते।",
-        september: "सितंबर 2026",
-        newDelhi: "नई दिल्ली, भारत"
+        journeyTitle: "तान्या और इशु",
+        journeyText: "जब हम पहली बार मिले थे तब से लेकर जब तक हमने साथ बिताने का फैसला किया, हर याद अनमोल है। हम 19-20 जून, 2026 को अपने प्रियजनों के बीच इस नए अध्याय को शुरू करने का इंतज़ार नहीं कर सकते।",
+        september: "19-20 जून 2026",
+        newDelhi: "द अशोक, नई दिल्ली"
     }
 };
 

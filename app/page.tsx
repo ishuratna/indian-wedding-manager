@@ -40,8 +40,8 @@ export default function LandingPage() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
-            src="/images/hero-wedding.png"
-            alt="Indian wedding ceremony"
+            src="/images/personal/couple-aerial.png"
+            alt="Tanya & Ishu"
             fill
             className="object-cover"
             priority
@@ -83,13 +83,13 @@ export default function LandingPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8">
             <div className="relative h-80 rounded-[2rem] overflow-hidden shadow-2xl group border-4 border-white">
-              <Image src="/images/hero-wedding.png" alt="Pre-wedding" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+              <Image src="/images/personal/family.png" alt="Family photo" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
             </div>
             <div className="relative h-80 rounded-[2rem] overflow-hidden shadow-2xl group border-4 border-white -rotate-2">
-              <Image src="/images/wedding-celebration.png" alt="Celebration" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+              <Image src="/images/personal/couple-walk.png" alt="Couple walking" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
             </div>
             <div className="relative h-80 rounded-[2rem] overflow-hidden shadow-2xl group border-4 border-white rotate-1">
-              <Image src="/images/wedding-rituals.png" alt="Rituals" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+              <Image src="/images/personal/couple-rings.png" alt="Couple rings" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
             </div>
           </div>
         </div>
