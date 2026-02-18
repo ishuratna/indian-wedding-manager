@@ -3,6 +3,8 @@
 import { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
+import { translations, Language } from '@/lib/utils/translations';
+import LanguageToggle from '@/components/LanguageToggle';
 
 export default function RSVPPage() {
     return (
@@ -14,6 +16,9 @@ export default function RSVPPage() {
 
 function RSVPContent() {
     const searchParams = useSearchParams();
+    const [lang, setLang] = useState<Language>('en');
+    const t = translations[lang];
+
     // In a production environment, this would be a custom slug or a fixed ID per deployment.
     // For this personal wedding use case, we use a placeholder or the 'wedding' query param.
     const weddingId = searchParams.get('wedding') || 'ishuratna-wedding';
@@ -77,13 +82,13 @@ function RSVPContent() {
             <div className="min-h-screen bg-rose-50 flex items-center justify-center p-6 font-serif">
                 <div className="max-w-md w-full bg-white rounded-3xl shadow-xl p-10 text-center space-y-6">
                     <div className="text-6xl text-rose-500 animate-bounce">💍</div>
-                    <h2 className="text-3xl font-bold text-slate-900">Thank You!</h2>
+                    <h2 className="text-3xl font-bold text-slate-900">{t.thankYou}</h2>
                     <p className="text-slate-600 text-lg">
-                        Your RSVP has been received. We are so excited to celebrate our special day with you!
+                        {t.rsvpSuccess}
                     </p>
                     <div className="pt-4">
                         <p className="text-sm text-slate-400">
-                            We will reach out to you on WhatsApp with further details soon.
+                            {t.rsvpWhatsAppNote}
                         </p>
                     </div>
                 </div>
@@ -93,6 +98,11 @@ function RSVPContent() {
 
     return (
         <div className="min-h-screen bg-rose-50 font-serif relative overflow-hidden">
+            {/* Header / Language Toggle */}
+            <div className="absolute top-6 right-6 z-50">
+                <LanguageToggle currentLanguage={lang} onLanguageChange={setLang} />
+            </div>
+
             {/* Background elements */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-rose-200/30 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-amber-100/30 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl"></div>
@@ -100,13 +110,13 @@ function RSVPContent() {
             <div className="max-w-2xl mx-auto pt-16 pb-24 px-6 relative z-10">
                 <div className="text-center mb-12 space-y-4">
                     <div className="inline-block px-4 py-1.5 bg-rose-100 text-rose-600 rounded-full text-sm font-semibold tracking-widest uppercase">
-                        Save The Date
+                        {t.saveTheDate}
                     </div>
                     <h1 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight">
-                        Our Wedding Ceremony
+                        {t.rsvpTitle}
                     </h1>
                     <p className="text-xl text-slate-600 font-sans italic">
-                        Kindly RSVP by responding to the invitation below
+                        {t.rsvpSubtitle}
                     </p>
                 </div>
 
@@ -120,12 +130,12 @@ function RSVPContent() {
                     {/* Basic Info */}
                     <div className="space-y-6">
                         <div>
-                            <label className="block text-sm font-sans font-bold text-slate-700 mb-2">FULL NAME</label>
+                            <label className="block text-sm font-sans font-bold text-slate-700 mb-2">{t.fullName}</label>
                             <input
                                 type="text"
                                 name="fullName"
                                 required
-                                placeholder="How should we address you?"
+                                placeholder={t.fullNamePlaceholder}
                                 className="w-full bg-slate-50 border-0 ring-1 ring-slate-200 focus:ring-2 focus:ring-rose-500 rounded-xl py-4 px-5 text-lg transition-all font-sans"
                                 value={formData.fullName}
                                 onChange={handleChange}
@@ -133,12 +143,12 @@ function RSVPContent() {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-sans font-bold text-slate-700 mb-2">WHATSAPP NUMBER</label>
+                            <label className="block text-sm font-sans font-bold text-slate-700 mb-2">{t.whatsappNumber}</label>
                             <input
                                 type="tel"
                                 name="phone"
                                 required
-                                placeholder="e.g. +91 99999 99999"
+                                placeholder={t.phonePlaceholder}
                                 className="w-full bg-slate-50 border-0 ring-1 ring-slate-200 focus:ring-2 focus:ring-rose-500 rounded-xl py-4 px-5 text-lg transition-all font-sans"
                                 value={formData.phone}
                                 onChange={handleChange}
@@ -148,12 +158,12 @@ function RSVPContent() {
 
                     {/* Attendance */}
                     <div>
-                        <label className="block text-sm font-sans font-bold text-slate-700 mb-4">WILL YOU BE ATTENDING?</label>
+                        <label className="block text-sm font-sans font-bold text-slate-700 mb-4">{t.attendingQuestion}</label>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             {[
-                                { id: 'Confirmed', label: 'YES', icon: '✨' },
-                                { id: 'Declined', label: 'NO', icon: '🙏' },
-                                { id: 'Tentative', label: 'MAYBE', icon: '🤔' }
+                                { id: 'Confirmed', label: t.yes, icon: '✨' },
+                                { id: 'Declined', label: t.no, icon: '🙏' },
+                                { id: 'Tentative', label: t.maybe, icon: '🤔' }
                             ].map(option => (
                                 <button
                                     key={option.id}
@@ -174,12 +184,12 @@ function RSVPContent() {
                     {/* Headcount - Conditional */}
                     {(formData.rsvpStatus === 'Confirmed' || formData.rsvpStatus === 'Tentative') && (
                         <div className="pt-4 border-t border-slate-100">
-                            <label className="block text-sm font-sans font-bold text-slate-700 mb-6">NUMBER OF GUESTS (INCLUDING YOU)</label>
+                            <label className="block text-sm font-sans font-bold text-slate-700 mb-6">{t.guestCount}</label>
                             <div className="space-y-6">
                                 {[
-                                    { id: 'adults', label: 'Adults', sub: 'Age 12+' },
-                                    { id: 'kids', label: 'Kids', sub: 'Age 3-12' },
-                                    { id: 'infants', label: 'Infants', sub: 'Under 3' }
+                                    { id: 'adults', label: t.adults, sub: t.adultsAge },
+                                    { id: 'kids', label: t.kids, sub: t.kidsAge },
+                                    { id: 'infants', label: t.infants, sub: t.infantsAge }
                                 ].map(type => (
                                     <div key={type.id} className="flex items-center justify-between">
                                         <div>
@@ -218,7 +228,7 @@ function RSVPContent() {
                             className={`w-full py-5 rounded-2xl bg-slate-900 text-white font-sans font-bold text-lg tracking-widest uppercase shadow-xl hover:shadow-2xl transition-all ${submitting ? 'opacity-70 cursor-not-allowed' : 'hover:-translate-y-1 hover:bg-black'
                                 }`}
                         >
-                            {submitting ? 'PROCESSING...' : 'SUBMIT RSVP'}
+                            {submitting ? t.processing : t.submit}
                         </button>
                     </div>
                 </form>
