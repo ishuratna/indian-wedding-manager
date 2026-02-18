@@ -20,8 +20,8 @@ function RSVPContent() {
     const t = translations[lang];
 
     // In a production environment, this would be a custom slug or a fixed ID per deployment.
-    // For this personal wedding use case, we use a placeholder or the 'wedding' query param.
-    const weddingId = searchParams.get('wedding') || 'ishuratna-wedding';
+    // We use the planner's production UID as the default to ensure correct linkage.
+    const weddingId = searchParams.get('wedding') || 'qP78RG6023gWjQ7bj9XQOfsXhIa2';
 
     const [formData, setFormData] = useState({
         fullName: '',

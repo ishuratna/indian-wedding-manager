@@ -24,7 +24,7 @@ export default function LandingPage() {
           </div>
           <div className="flex items-center gap-8">
             <LanguageToggle currentLanguage={lang} onLanguageChange={setLang} />
-            <Link href="/rsvp" className="text-sm font-bold text-rose-600 hover:text-rose-700 transition-colors">{t.rsvpNow}</Link>
+            <Link href="/rsvp?wedding=qP78RG6023gWjQ7bj9XQOfsXhIa2" className="text-sm font-bold text-rose-600 hover:text-rose-700 transition-colors">{t.rsvpNow}</Link>
             <Link
               href="/login"
               className="text-xs font-semibold text-slate-400 hover:text-slate-600 transition-all"
@@ -63,7 +63,7 @@ export default function LandingPage() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-10">
             <Link
-              href="/rsvp"
+              href="/rsvp?wedding=qP78RG6023gWjQ7bj9XQOfsXhIa2"
               className="h-16 px-12 rounded-full bg-rose-600 text-white font-bold text-lg flex items-center justify-center hover:bg-rose-700 hover:-translate-y-1 transition-all shadow-xl shadow-rose-900/40 tracking-widest uppercase"
             >
               {t.submit}

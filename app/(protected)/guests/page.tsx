@@ -78,6 +78,16 @@ export default function GuestsPage() {
               value={weddingId}
               onChange={(e) => setWeddingId(e.target.value)}
             />
+            <button
+              onClick={() => {
+                const url = `${window.location.origin}/rsvp?wedding=${weddingId}`;
+                navigator.clipboard.writeText(url);
+                alert('Wedding invitation link copied to clipboard!');
+              }}
+              className="inline-flex items-center justify-center rounded-lg bg-white border border-zinc-200 px-4 py-2 text-sm font-semibold text-zinc-900 shadow-sm hover:bg-zinc-50"
+            >
+              Copy Invitation Link
+            </button>
             <Link
               href="/guests/add"
               className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
