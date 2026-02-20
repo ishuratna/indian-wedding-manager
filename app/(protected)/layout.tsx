@@ -4,9 +4,11 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth/AuthContext';
+import { useAgent, AgentType } from '@/lib/context/AgentContext';
 
 export default function ProtectedLayout({ children }: { children: React.ReactNode }) {
     const { user, loading } = useAuth();
+    const { activeAgent, setActiveAgent } = useAgent();
     const router = useRouter();
 
     useEffect(() => {
@@ -40,12 +42,38 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
                             <span className="text-2xl">💍</span>
                             <span className="font-bold text-lg text-rose-600 font-serif">EasyWeddings</span>
                         </Link>
+
+                        {/* Agent Switcher */}
+                        <div className="flex bg-slate-100 p-1 rounded-xl items-center">
+                            <button
+                                onClick={() => setActiveAgent('rsvp')}
+                                className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${activeAgent === 'rsvp' ? 'bg-white text-rose-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                            >
+                                RSVP Agent
+                            </button>
+                            <button
+                                onClick={() => setActiveAgent('b2b')}
+                                className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${activeAgent === 'b2b' ? 'bg-white text-purple-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                            >
+                                Wedding Pro
+                            </button>
+                        </div>
+
                         <div className="flex items-center gap-1 sm:gap-4 ml-2 sm:ml-4 overflow-x-auto no-scrollbar">
                             <Link href="/dashboard" className="text-xs sm:text-sm font-medium text-slate-600 hover:text-rose-600 transition-colors px-2 sm:px-3 py-1.5 rounded-lg hover:bg-rose-50 whitespace-nowrap">Dashboard</Link>
-                            <Link href="/guests" className="text-xs sm:text-sm font-medium text-slate-600 hover:text-rose-600 transition-colors px-2 sm:px-3 py-1.5 rounded-lg hover:bg-rose-50 whitespace-nowrap">Guests</Link>
-                            <Link href="/marketplace" className="text-xs sm:text-sm font-medium text-slate-600 hover:text-rose-600 transition-colors px-2 sm:px-3 py-1.5 rounded-lg hover:bg-rose-50 whitespace-nowrap">Marketplace</Link>
-                            <Link href="/vendors" className="text-xs sm:text-sm font-medium text-slate-600 hover:text-rose-600 transition-colors px-2 sm:px-3 py-1.5 rounded-lg hover:bg-rose-50 whitespace-nowrap">Vendors</Link>
-                            <Link href="/budget" className="text-xs sm:text-sm font-medium text-slate-600 hover:text-rose-600 transition-colors px-2 sm:px-3 py-1.5 rounded-lg hover:bg-rose-50 whitespace-nowrap">Budget</Link>
+
+                            {activeAgent === 'rsvp' ? (
+                                <>
+                                    <Link href="/guests" className="text-xs sm:text-sm font-medium text-slate-600 hover:text-rose-600 transition-colors px-2 sm:px-3 py-1.5 rounded-lg hover:bg-rose-50 whitespace-nowrap">Guest List</Link>
+                                    <Link href="/rsvp" className="text-xs sm:text-sm font-medium text-slate-600 hover:text-rose-600 transition-colors px-2 sm:px-3 py-1.5 rounded-lg hover:bg-rose-50 whitespace-nowrap">RSVPs</Link>
+                                </>
+                            ) : (
+                                <>
+                                    <Link href="/marketplace" className="text-xs sm:text-sm font-medium text-slate-600 hover:text-rose-600 transition-colors px-2 sm:px-3 py-1.5 rounded-lg hover:bg-rose-50 whitespace-nowrap">Marketplace</Link>
+                                    <Link href="/vendors" className="text-xs sm:text-sm font-medium text-slate-600 hover:text-rose-600 transition-colors px-2 sm:px-3 py-1.5 rounded-lg hover:bg-rose-50 whitespace-nowrap">Vendors</Link>
+                                    <Link href="/budget" className="text-xs sm:text-sm font-medium text-slate-600 hover:text-rose-600 transition-colors px-2 sm:px-3 py-1.5 rounded-lg hover:bg-rose-50 whitespace-nowrap">Budget</Link>
+                                </>
+                            )}
                         </div>
                     </div>
                     <UserMenu />

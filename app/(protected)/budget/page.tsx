@@ -81,6 +81,9 @@ export default function BudgetPage() {
         <div className="max-w-7xl mx-auto px-4 py-8">
             <div className="flex justify-between items-end mb-8">
                 <div>
+                    <div className="flex items-center gap-2 mb-1">
+                        <span className="bg-purple-100 text-purple-600 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Wedding Pro Agent</span>
+                    </div>
                     <h1 className="text-3xl font-bold text-slate-900 font-serif">Budget Manager</h1>
                     <p className="text-slate-500 mt-1">Manage your wedding finances and vendor payments</p>
                 </div>

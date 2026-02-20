@@ -130,8 +130,13 @@ export default function VendorsPage() {
     return (
         <div className="min-h-screen bg-zinc-50 font-sans">
             <header className="bg-white border-b border-zinc-200">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-                    <h1 className="text-xl font-bold text-zinc-900 tracking-tight">My Vendors</h1>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-4 flex items-center justify-between">
+                    <div>
+                        <div className="flex items-center gap-2 mb-1">
+                            <span className="bg-purple-100 text-purple-600 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Wedding Pro Agent</span>
+                        </div>
+                        <h1 className="text-2xl font-bold text-zinc-900 tracking-tight font-serif">My Vendors</h1>
+                    </div>
                     <div className="flex items-center gap-3">
                         <Link
                             href="/marketplace"

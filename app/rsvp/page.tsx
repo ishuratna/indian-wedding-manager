@@ -41,6 +41,21 @@ function RSVPContent() {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
+    // Pre-fill from URL parameters
+    useState(() => {
+        if (typeof window !== 'undefined') {
+            const name = searchParams.get('name');
+            const phone = searchParams.get('phone');
+            if (name || phone) {
+                setFormData(prev => ({
+                    ...prev,
+                    fullName: name || prev.fullName,
+                    phone: phone || prev.phone
+                }));
+            }
+        }
+    });
+
     const handleHeadcountChange = (field: 'adults' | 'kids' | 'infants', delta: number) => {
         setFormData(prev => ({
             ...prev,
