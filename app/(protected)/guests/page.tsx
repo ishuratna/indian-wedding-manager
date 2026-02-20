@@ -16,6 +16,9 @@ export default function GuestsPage() {
   // WhatsApp Invite State
   const [sendingInviteGuestId, setSendingInviteGuestId] = useState<string | null>(null);
 
+  // Expanded View State
+  const [expandedGuestId, setExpandedGuestId] = useState<string | null>(null);
+
   // WhatsApp Test State
   const [testPhone, setTestPhone] = useState('');
   const [sendingWa, setSendingWa] = useState(false);
@@ -220,58 +223,125 @@ export default function GuestsPage() {
           ) : (
             <ul role="list" className="divide-y divide-zinc-100">
               {guests.map((guest) => (
-                <li key={guest.id} className="flex flex-wrap items-center justify-between gap-x-6 gap-y-4 py-5 sm:flex-nowrap px-6 hover:bg-zinc-50 transition-colors">
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-semibold leading-6 text-zinc-900 flex items-center gap-2">
-                      {guest.fullName}
-                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium 
-                                        ${guest.rsvpStatus === 'Confirmed' ? 'bg-green-50 text-green-700 ring-1 ring-inset ring-green-600/20' :
-                          guest.rsvpStatus === 'Declined' ? 'bg-red-50 text-red-700 ring-1 ring-inset ring-red-600/20' :
-                            'bg-yellow-50 text-yellow-700 ring-1 ring-inset ring-yellow-600/20'}`}>
-                        {guest.rsvpStatus}
-                      </span>
-                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium 
-                                        ${guest.registrationStage === 'DetailsComplete' ? 'bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-600/20' :
-                          'bg-zinc-50 text-zinc-600 ring-1 ring-inset ring-zinc-500/10'}`}>
-                        {guest.registrationStage === 'DetailsComplete' ? 'Details Shared' : 'RSVP Only'}
-                      </span>
-                    </p>
-                    <div className="mt-1 flex items-center gap-x-2 text-xs leading-5 text-zinc-500">
-                      <p className="font-medium text-zinc-700">{guest.phone}</p>
-                      <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current"><circle cx={1} cy={1} r={1} /></svg>
-                      <p>Headcount: <span className="font-bold text-zinc-900">{guest.totalHeadcount || 1}</span> (A:{guest.adults || 1}, K:{guest.kids || 0}, I:{guest.infants || 0})</p>
+                <li key={guest.id} className="flex flex-col flex-wrap border-b border-zinc-100 last:border-0 hover:bg-zinc-50/50 transition-colors">
+                  <div className="flex items-center justify-between gap-x-6 gap-y-4 py-5 px-6 sm:flex-nowrap cursor-pointer" onClick={() => guest.id && setExpandedGuestId(expandedGuestId === guest.id ? null : guest.id)}>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold leading-6 text-zinc-900 flex items-center gap-2">
+                        {guest.fullName}
+                        <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium 
+                                          ${guest.rsvpStatus === 'Confirmed' ? 'bg-green-50 text-green-700 ring-1 ring-inset ring-green-600/20' :
+                            guest.rsvpStatus === 'Declined' ? 'bg-red-50 text-red-700 ring-1 ring-inset ring-red-600/20' :
+                              'bg-yellow-50 text-yellow-700 ring-1 ring-inset ring-yellow-600/20'}`}>
+                          {guest.rsvpStatus}
+                        </span>
+                        <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium 
+                                          ${guest.registrationStage === 'DetailsComplete' ? 'bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-600/20' :
+                            'bg-zinc-50 text-zinc-600 ring-1 ring-inset ring-zinc-500/10'}`}>
+                          {guest.registrationStage === 'DetailsComplete' ? 'Details Shared' : 'RSVP Only'}
+                        </span>
+                      </p>
+                      <div className="mt-1 flex items-center gap-x-2 text-xs leading-5 text-zinc-500">
+                        <p className="font-medium text-zinc-700">{guest.phone}</p>
+                        <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current"><circle cx={1} cy={1} r={1} /></svg>
+                        <p>Headcount: <span className="font-bold text-zinc-900">{guest.totalHeadcount || 1}</span> (A:{guest.adults || 1}, K:{guest.kids || 0}, I:{guest.infants || 0})</p>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="flex items-center gap-4">
-                    <button
-                      onClick={() => guest.id && handleSendInvite(guest.id)}
-                      disabled={sendingInviteGuestId === guest.id}
-                      className="flex items-center gap-1.5 text-xs font-bold text-green-600 bg-green-50 hover:bg-green-100 px-3 py-1.5 rounded-lg transition-all border border-green-200 disabled:opacity-50"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                      </svg>
-                      {sendingInviteGuestId === guest.id ? 'Sending...' : 'Send Invite'}
-                    </button>
-
-                    {guest.rsvpStatus === 'Confirmed' && guest.registrationStage === 'RSVP' && (
+                    <div className="flex items-center gap-4">
                       <button
-                        onClick={() => {
-                          const url = `${window.location.origin}/guests/details/${guest.id}`;
-                          navigator.clipboard.writeText(url);
-                          alert('Details form link copied to clipboard!');
-                        }}
-                        className="text-xs font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors border border-blue-200"
+                        onClick={(e) => { e.stopPropagation(); guest.id && handleSendInvite(guest.id); }}
+                        disabled={sendingInviteGuestId === guest.id}
+                        className="flex items-center gap-1.5 text-xs font-bold text-green-600 bg-green-50 hover:bg-green-100 px-3 py-1.5 rounded-lg transition-all border border-green-200 disabled:opacity-50"
                       >
-                        Copy Details Link
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                        </svg>
+                        {sendingInviteGuestId === guest.id ? 'Sending...' : 'Send Invite'}
                       </button>
-                    )}
-                    <div className="flex flex-col items-end min-w-[120px]">
-                      <p className="text-xs font-medium text-zinc-900">{guest.arrival?.mode ? `Arrives by ${guest.arrival.mode}` : 'Waiting for logistics'}</p>
-                      <p className="text-[10px] text-zinc-500 uppercase tracking-wide">{guest.arrival?.date ? new Date(guest.arrival.date).toLocaleDateString() : 'TBD'}</p>
+
+                      {guest.rsvpStatus === 'Confirmed' && guest.registrationStage === 'RSVP' && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const url = `${window.location.origin}/guests/details/${guest.id}`;
+                            navigator.clipboard.writeText(url);
+                            alert('Details form link copied to clipboard!');
+                          }}
+                          className="text-xs font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors border border-blue-200"
+                        >
+                          Copy Details Link
+                        </button>
+                      )}
+                      <div className="flex flex-col items-end min-w-[120px]">
+                        <p className="text-xs font-medium text-zinc-900">{guest.arrival?.mode ? `Arrives by ${guest.arrival.mode}` : 'Waiting for logistics'}</p>
+                        <p className="text-[10px] text-zinc-500 uppercase tracking-wide">{guest.arrival?.date ? new Date(guest.arrival.date).toLocaleDateString() : 'TBD'}</p>
+                      </div>
+                      <div className={`transition-transform duration-200 ${expandedGuestId === guest.id ? 'rotate-180' : ''}`}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-zinc-400">
+                          <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                      </div>
                     </div>
                   </div>
+
+                  {/* Expanded Content */}
+                  {expandedGuestId === guest.id && (
+                    <div className="px-6 py-6 bg-zinc-50/80 border-t border-zinc-100 animate-in fade-in slide-in-from-top-2 duration-200">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {/* Food & Preferences */}
+                        <div className="space-y-3">
+                          <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Preferences</h4>
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm font-medium text-zinc-700">Dietary:</span>
+                              <div className="flex flex-wrap gap-1">
+                                {guest.dietaryRestrictions && guest.dietaryRestrictions.length > 0 ? guest.dietaryRestrictions.map(d => (
+                                  <span key={d} className="px-1.5 py-0.5 bg-rose-50 text-rose-600 text-[10px] font-bold rounded border border-rose-100">{d}</span>
+                                )) : <span className="text-zinc-400 text-xs italic">No restrictions</span>}
+                              </div>
+                            </div>
+                            {guest.allergies && (
+                              <div className="text-sm">
+                                <span className="font-medium text-zinc-700">Allergies: </span>
+                                <span className="text-zinc-600">{guest.allergies}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Events Attendance */}
+                        <div className="space-y-3">
+                          <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Events attending</h4>
+                          <div className="flex flex-wrap gap-1.5">
+                            {guest.events && guest.events.length > 0 ? guest.events.map(e => (
+                              <span key={e} className="px-2 py-0.5 bg-blue-50 text-blue-600 text-[10px] font-bold rounded-lg border border-blue-100 uppercase tracking-tight">{e}</span>
+                            )) : <span className="text-zinc-400 text-xs italic">No events selected</span>}
+                          </div>
+                        </div>
+
+                        {/* Travel & Stay */}
+                        <div className="space-y-3">
+                          <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Travel & Logistics</h4>
+                          <div className="space-y-2">
+                            {guest.arrival?.date && (
+                              <div className="text-sm flex flex-col gap-0.5">
+                                <span className="font-medium text-zinc-700">Arrival:</span>
+                                <span className="text-zinc-600 text-xs">
+                                  {new Date(guest.arrival.date).toLocaleDateString()} at {guest.arrival.time} via {guest.arrival.mode}
+                                </span>
+                              </div>
+                            )}
+                            <div className="text-sm flex items-center gap-2">
+                              <span className="font-medium text-zinc-700">Accommodation:</span>
+                              <span className={`text-xs font-bold ${guest.accommodation?.isRequired ? 'text-green-600' : 'text-zinc-400'}`}>
+                                {guest.accommodation?.isRequired ? `YES (${guest.accommodation.roomsNeeded} rooms)` : 'NOT NEEDED'}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>
