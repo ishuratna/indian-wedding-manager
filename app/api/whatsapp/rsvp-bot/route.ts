@@ -19,11 +19,17 @@ export async function POST(request: NextRequest) {
         }
 
         const guest = guestSnap.data();
-        const phone = guest.phone;
+        let phone = guest.phone;
         const fullName = guest.fullName;
 
         if (!phone) {
             return NextResponse.json({ error: 'Guest phone number not found' }, { status: 400 });
+        }
+
+        // Sanitize phone number to ensure it has a country code (assuming India +91 if 10 digits)
+        phone = phone.replace(/\\D/g, '');
+        if (phone.length === 10) {
+            phone = '91' + phone;
         }
 
         // 1. Send Initial Bot Message
