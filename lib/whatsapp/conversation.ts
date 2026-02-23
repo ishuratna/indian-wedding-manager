@@ -26,6 +26,23 @@ export async function processConversation(phone: string, messageBody: string, na
         return;
     }
 
+    // 3. Handle specific RSVP Validation message
+    if (input.toLowerCase().includes('confirming my whatsapp')) {
+        if (guestDocRef) {
+            await setDoc(guestDocRef, { whatsappOptIn: true, updatedAt: serverTimestamp() }, { merge: true });
+        } else {
+            await addDoc(collection(db, 'guests'), {
+                ...currentGuest,
+                whatsappOptIn: true,
+                weddingId: process.env.DEFAULT_WEDDING_ID || 'llDG0SokS2a2DA00c6Ab',
+                createdAt: serverTimestamp(),
+                updatedAt: serverTimestamp(),
+            });
+        }
+        await sendWhatsAppMessage(phone, 'text', "Thank you for contacting us, we will get back to you shortly.");
+        return;
+    }
+
     // 3. Process with AI
     const { updatedData, reply } = await processWhatsAppWithAI(input, currentGuest);
 
