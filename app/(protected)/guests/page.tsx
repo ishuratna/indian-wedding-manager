@@ -295,7 +295,7 @@ export default function GuestsPage() {
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            const url = `${window.location.origin}/guests/details/${guest.id}`;
+                            const url = `${window.location.origin}/details?wedding=${weddingId}`;
                             navigator.clipboard.writeText(url);
                             alert('Details form link copied to clipboard!');
                           }}
