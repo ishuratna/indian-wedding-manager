@@ -136,9 +136,9 @@ export default function GuestsPage() {
             />
             <button
               onClick={() => {
-                const url = `${window.location.origin}/rsvp?wedding=${weddingId}`;
+                const url = `${window.location.origin}/details?wedding=${weddingId}`;
                 navigator.clipboard.writeText(url);
-                alert('Wedding invitation link copied to clipboard!');
+                alert('Shared invitation link copied to clipboard!');
               }}
               className="inline-flex items-center justify-center rounded-lg bg-white border border-zinc-200 px-4 py-2 text-sm font-semibold text-zinc-900 shadow-sm hover:bg-zinc-50"
             >

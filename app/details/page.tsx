@@ -131,12 +131,12 @@ function DetailsContent() {
 
                 <div className="max-w-md w-full bg-white rounded-[2rem] shadow-2xl p-8 md:p-12 relative z-10 border border-rose-100 mt-[-10vh]">
                     <div className="text-center mb-8 space-y-2">
-                        <div className="text-4xl text-rose-500 mb-4">🥂</div>
-                        <h1 className="text-2xl font-bold text-slate-900 leading-tight">
-                            Find Your Invitation
+                        <div className="text-4xl text-rose-500 mb-4">✨</div>
+                        <h1 className="text-2xl font-bold text-zinc-900 leading-tight">
+                            Welcoming You to #Ishanya
                         </h1>
-                        <p className="text-slate-500 font-sans text-sm">
-                            Please enter your WhatsApp/Phone number to view and complete your travel details.
+                        <p className="text-zinc-500 font-sans text-sm">
+                            Please enter your registered phone number to continue.
                         </p>
                     </div>
 
@@ -202,138 +202,211 @@ function DetailsContent() {
                             </div>
                         )}
 
-                        {/* 1. Dining Preferences */}
-                        <section className="space-y-6">
+                        {/* 0. RSVP & Headcount Calibration */}
+                        <section className="space-y-8 pb-8 border-b border-slate-100">
                             <h2 className="text-xl font-bold text-slate-900 flex items-center gap-3">
-                                <span className="bg-rose-100 text-rose-500 w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span>
-                                {t.diningHeader}
+                                <span className="bg-rose-100 text-rose-500 w-8 h-8 rounded-full flex items-center justify-center text-sm">✓</span>
+                                Attendance Confirmation
                             </h2>
-                            <div className="flex flex-wrap gap-4">
-                                {[
-                                    { id: 'Veg', label: t.veg },
-                                    { id: 'Non-Veg', label: t.nonVeg },
-                                    { id: 'Jain', label: t.jain },
-                                    { id: 'Vegan', label: t.vegan }
-                                ].map(diet => (
-                                    <button
-                                        key={diet.id}
-                                        type="button"
-                                        onClick={() => toggleArrayItem('dietaryRestrictions', diet.id)}
-                                        className={`px-6 py-3 rounded-xl border-2 transition-all font-sans font-bold text-sm tracking-widest ${guest.dietaryRestrictions?.includes(diet.id as any)
-                                            ? 'bg-rose-50 border-rose-500 text-rose-600'
-                                            : 'border-slate-100 text-slate-400 hover:border-rose-200'
-                                            }`}
-                                    >
-                                        {diet.label}
-                                    </button>
-                                ))}
-                            </div>
-                            <input
-                                type="text"
-                                placeholder={t.diningPlaceholder || "Any Allergies? (e.g. Peanuts, Gluten)"}
-                                className="w-full bg-slate-50 border-0 ring-1 ring-slate-200 focus:ring-2 focus:ring-rose-500 rounded-xl py-4 px-5 text-sm transition-all font-sans"
-                                value={guest.allergies || ''}
-                                onChange={(e) => handleFormUpdate('allergies', e.target.value)}
-                            />
-                        </section>
-
-                        {/* 2. Events Attendance */}
-                        <section className="space-y-6">
-                            <h2 className="text-xl font-bold text-slate-900 flex items-center gap-3">
-                                <span className="bg-rose-100 text-rose-500 w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span>
-                                {t.eventsHeader}
-                            </h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {['Mehendi', 'Sangeet', 'Wedding Ceremony', 'Reception'].map(event => (
-                                    <label key={event} className={`flex items-center gap-3 p-4 border-2 rounded-2xl cursor-pointer transition-all ${guest.events?.includes(event) ? 'bg-rose-50 border-rose-500' : 'border-slate-100 hover:border-rose-200'
-                                        }`}>
-                                        <input
-                                            type="checkbox"
-                                            className="w-5 h-5 rounded border-slate-300 text-rose-600 focus:ring-rose-500"
-                                            checked={guest.events?.includes(event)}
-                                            onChange={() => toggleArrayItem('events', event)}
-                                        />
-                                        <span className="font-sans font-bold text-slate-700 tracking-wide">{event.toUpperCase()}</span>
-                                    </label>
-                                ))}
-                            </div>
-                        </section>
-
-                        {/* 3. Travel & Accommodation */}
-                        <section className="space-y-8">
-                            <h2 className="text-xl font-bold text-slate-900 flex items-center gap-3">
-                                <span className="bg-rose-100 text-rose-500 w-8 h-8 rounded-full flex items-center justify-center text-sm">3</span>
-                                {t.travelHeader}
-                            </h2>
-
-                            <div className="grid md:grid-cols-2 gap-10">
-                                {/* Arrival */}
-                                <div className="space-y-4">
-                                    <p className="font-bold text-slate-600 text-sm tracking-widest uppercase">{t.arrivalVenue}</p>
-                                    <input
-                                        type="date"
-                                        className="w-full bg-slate-50 border-0 ring-1 ring-slate-200 rounded-xl py-3 px-4 font-sans text-sm"
-                                        value={guest.arrival?.date || ''}
-                                        onChange={(e) => handleNestedUpdate('arrival', 'date', e.target.value)}
-                                    />
-                                    <input
-                                        type="time"
-                                        className="w-full bg-slate-50 border-0 ring-1 ring-slate-200 rounded-xl py-3 px-4 font-sans text-sm"
-                                        value={guest.arrival?.time || ''}
-                                        onChange={(e) => handleNestedUpdate('arrival', 'time', e.target.value)}
-                                    />
-                                    <select
-                                        className="w-full bg-slate-50 border-0 ring-1 ring-slate-200 rounded-xl py-3 px-4 font-sans text-sm"
-                                        value={guest.arrival?.mode || 'Flight'}
-                                        onChange={(e) => handleNestedUpdate('arrival', 'mode', e.target.value)}
-                                    >
-                                        <option value="Flight">Flight</option>
-                                        <option value="Train">Train</option>
-                                        <option value="Car">Car</option>
-                                        <option value="Bus">Bus</option>
-                                    </select>
+                            <div>
+                                <label className="block text-sm font-sans font-bold text-slate-700 mb-4">{t.attendingQuestion || "Will you be attending?"}</label>
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    {[
+                                        { id: 'Confirmed', label: t.yes || 'Yes', icon: '✨' },
+                                        { id: 'Declined', label: t.no || 'No', icon: '🙏' },
+                                        { id: 'Tentative', label: t.maybe || 'Maybe', icon: '🤔' }
+                                    ].map(option => (
+                                        <button
+                                            key={option.id}
+                                            type="button"
+                                            onClick={() => handleFormUpdate('rsvpStatus', option.id as any)}
+                                            className={`py-4 rounded-2xl border-2 flex flex-col items-center gap-2 transition-all ${guest.rsvpStatus === option.id
+                                                ? 'border-rose-500 bg-rose-50 shadow-inner'
+                                                : 'border-slate-100 hover:border-rose-200 text-slate-500'
+                                                }`}
+                                        >
+                                            <span className="text-2xl">{option.icon}</span>
+                                            <span className="font-sans font-bold text-sm tracking-widest uppercase">{option.label}</span>
+                                        </button>
+                                    ))}
                                 </div>
+                            </div>
 
-                                {/* Accommodation */}
-                                <div className="space-y-4">
-                                    <p className="font-bold text-slate-600 text-sm tracking-widest uppercase">{t.stayPreference}</p>
-                                    <label className={`flex items-center gap-3 p-4 border-2 rounded-2xl cursor-pointer transition-all ${guest.accommodation?.isRequired ? 'bg-rose-50 border-rose-500' : 'border-slate-100 hover:border-rose-200'
-                                        }`}>
-                                        <input
-                                            type="checkbox"
-                                            className="w-5 h-5 rounded border-slate-300 text-rose-600 focus:ring-rose-500"
-                                            checked={guest.accommodation?.isRequired}
-                                            onChange={(e) => handleNestedUpdate('accommodation', 'isRequired', e.target.checked)}
-                                        />
-                                        <span className="font-sans font-bold text-slate-700 tracking-wide">{t.needAccommodation}</span>
-                                    </label>
-                                    {guest.accommodation?.isRequired && (
-                                        <div className="flex items-center justify-between p-2">
-                                            <span className="text-sm font-sans text-slate-500 uppercase font-bold">{t.roomsNeeded || "Rooms"}:</span>
-                                            <div className="flex items-center gap-4">
-                                                <button
-                                                    type="button"
-                                                    onClick={() => handleNestedUpdate('accommodation', 'roomsNeeded', Math.max(0, (guest.accommodation?.roomsNeeded || 0) - 1))}
-                                                    className="w-8 h-8 rounded-full border border-slate-200 text-slate-400"
-                                                >
-                                                    −
-                                                </button>
-                                                <span className="w-4 text-center font-sans font-bold">
-                                                    {guest.accommodation?.roomsNeeded || 0}
-                                                </span>
-                                                <button
-                                                    type="button"
-                                                    onClick={() => handleNestedUpdate('accommodation', 'roomsNeeded', (guest.accommodation?.roomsNeeded || 0) + 1)}
-                                                    className="w-8 h-8 rounded-full border border-slate-200 text-slate-400"
-                                                >
-                                                    +
-                                                </button>
+                            {(guest.rsvpStatus === 'Confirmed' || guest.rsvpStatus === 'Tentative') && (
+                                <div className="pt-4 animate-in fade-in slide-in-from-top-4 duration-300">
+                                    <label className="block text-sm font-sans font-bold text-slate-700 mb-6">{t.guestCount || "Number of Guests"}</label>
+                                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+                                        {[
+                                            { id: 'adults', label: t.adults || 'Adults', sub: t.adultsAge || '12+ Years' },
+                                            { id: 'kids', label: t.kids || 'Kids', sub: t.kidsAge || '2-12 Years' },
+                                            { id: 'infants', label: t.infants || 'Infants', sub: t.infantsAge || '0-2 Years' }
+                                        ].map(type => (
+                                            <div key={type.id} className="flex flex-col items-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                                <div className="text-center">
+                                                    <p className="font-bold text-slate-900 text-sm">{type.label}</p>
+                                                    <p className="text-[10px] text-slate-400 font-sans tracking-wide uppercase">{type.sub}</p>
+                                                </div>
+                                                <div className="flex items-center gap-4 mt-2">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleFormUpdate(type.id as any, Math.max(0, (guest[type.id as keyof Guest] as number || 0) - 1))}
+                                                        className="w-8 h-8 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:border-rose-500 transition-all font-bold"
+                                                    >
+                                                        −
+                                                    </button>
+                                                    <span className="w-4 text-center text-lg font-bold font-sans">
+                                                        {guest[type.id as keyof Guest] as number || 0}
+                                                    </span>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleFormUpdate(type.id as any, (guest[type.id as keyof Guest] as number || 0) + 1)}
+                                                        className="w-8 h-8 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:border-rose-500 transition-all font-bold"
+                                                    >
+                                                        +
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    )}
+                                        ))}
+                                    </div>
                                 </div>
+                            )}
+                        </section>
+                        {guest.rsvpStatus !== 'Declined' && (
+                            <div className="space-y-12 animate-in fade-in zoom-in-95 duration-500">
+                                {/* 1. Dining Preferences */}
+                                <section className="space-y-6">
+                                    <h2 className="text-xl font-bold text-slate-900 flex items-center gap-3">
+                                        <span className="bg-rose-100 text-rose-500 w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span>
+                                        {t.diningHeader}
+                                    </h2>
+                                    <div className="flex flex-wrap gap-4">
+                                        {[
+                                            { id: 'Veg', label: t.veg },
+                                            { id: 'Non-Veg', label: t.nonVeg },
+                                            { id: 'Jain', label: t.jain },
+                                            { id: 'Vegan', label: t.vegan }
+                                        ].map(diet => (
+                                            <button
+                                                key={diet.id}
+                                                type="button"
+                                                onClick={() => toggleArrayItem('dietaryRestrictions', diet.id)}
+                                                className={`px-6 py-3 rounded-xl border-2 transition-all font-sans font-bold text-sm tracking-widest ${guest.dietaryRestrictions?.includes(diet.id as any)
+                                                    ? 'bg-rose-50 border-rose-500 text-rose-600'
+                                                    : 'border-slate-100 text-slate-400 hover:border-rose-200'
+                                                    }`}
+                                            >
+                                                {diet.label}
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <input
+                                        type="text"
+                                        placeholder={t.diningPlaceholder || "Any Allergies? (e.g. Peanuts, Gluten)"}
+                                        className="w-full bg-slate-50 border-0 ring-1 ring-slate-200 focus:ring-2 focus:ring-rose-500 rounded-xl py-4 px-5 text-sm transition-all font-sans"
+                                        value={guest.allergies || ''}
+                                        onChange={(e) => handleFormUpdate('allergies', e.target.value)}
+                                    />
+                                </section>
+
+                                {/* 2. Events Attendance */}
+                                <section className="space-y-6">
+                                    <h2 className="text-xl font-bold text-slate-900 flex items-center gap-3">
+                                        <span className="bg-rose-100 text-rose-500 w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span>
+                                        {t.eventsHeader}
+                                    </h2>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {['Mehendi', 'Sangeet', 'Wedding Ceremony', 'Reception'].map(event => (
+                                            <label key={event} className={`flex items-center gap-3 p-4 border-2 rounded-2xl cursor-pointer transition-all ${guest.events?.includes(event) ? 'bg-rose-50 border-rose-500' : 'border-slate-100 hover:border-rose-200'
+                                                }`}>
+                                                <input
+                                                    type="checkbox"
+                                                    className="w-5 h-5 rounded border-slate-300 text-rose-600 focus:ring-rose-500"
+                                                    checked={guest.events?.includes(event)}
+                                                    onChange={() => toggleArrayItem('events', event)}
+                                                />
+                                                <span className="font-sans font-bold text-slate-700 tracking-wide">{event.toUpperCase()}</span>
+                                            </label>
+                                        ))}
+                                    </div>
+                                </section>
+
+                                {/* 3. Travel & Accommodation */}
+                                <section className="space-y-8">
+                                    <h2 className="text-xl font-bold text-slate-900 flex items-center gap-3">
+                                        <span className="bg-rose-100 text-rose-500 w-8 h-8 rounded-full flex items-center justify-center text-sm">3</span>
+                                        {t.travelHeader}
+                                    </h2>
+
+                                    <div className="grid md:grid-cols-2 gap-10">
+                                        {/* Arrival */}
+                                        <div className="space-y-4">
+                                            <p className="font-bold text-slate-600 text-sm tracking-widest uppercase">{t.arrivalVenue}</p>
+                                            <input
+                                                type="date"
+                                                className="w-full bg-slate-50 border-0 ring-1 ring-slate-200 rounded-xl py-3 px-4 font-sans text-sm"
+                                                value={guest.arrival?.date || ''}
+                                                onChange={(e) => handleNestedUpdate('arrival', 'date', e.target.value)}
+                                            />
+                                            <input
+                                                type="time"
+                                                className="w-full bg-slate-50 border-0 ring-1 ring-slate-200 rounded-xl py-3 px-4 font-sans text-sm"
+                                                value={guest.arrival?.time || ''}
+                                                onChange={(e) => handleNestedUpdate('arrival', 'time', e.target.value)}
+                                            />
+                                            <select
+                                                className="w-full bg-slate-50 border-0 ring-1 ring-slate-200 rounded-xl py-3 px-4 font-sans text-sm"
+                                                value={guest.arrival?.mode || 'Flight'}
+                                                onChange={(e) => handleNestedUpdate('arrival', 'mode', e.target.value)}
+                                            >
+                                                <option value="Flight">Flight</option>
+                                                <option value="Train">Train</option>
+                                                <option value="Car">Car</option>
+                                                <option value="Bus">Bus</option>
+                                            </select>
+                                        </div>
+
+                                        {/* Accommodation */}
+                                        <div className="space-y-4">
+                                            <p className="font-bold text-slate-600 text-sm tracking-widest uppercase">{t.stayPreference}</p>
+                                            <label className={`flex items-center gap-3 p-4 border-2 rounded-2xl cursor-pointer transition-all ${guest.accommodation?.isRequired ? 'bg-rose-50 border-rose-500' : 'border-slate-100 hover:border-rose-200'
+                                                }`}>
+                                                <input
+                                                    type="checkbox"
+                                                    className="w-5 h-5 rounded border-slate-300 text-rose-600 focus:ring-rose-500"
+                                                    checked={guest.accommodation?.isRequired}
+                                                    onChange={(e) => handleNestedUpdate('accommodation', 'isRequired', e.target.checked)}
+                                                />
+                                                <span className="font-sans font-bold text-slate-700 tracking-wide">{t.needAccommodation}</span>
+                                            </label>
+                                            {guest.accommodation?.isRequired && (
+                                                <div className="flex items-center justify-between p-2">
+                                                    <span className="text-sm font-sans text-slate-500 uppercase font-bold">{t.roomsNeeded || "Rooms"}:</span>
+                                                    <div className="flex items-center gap-4">
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => handleNestedUpdate('accommodation', 'roomsNeeded', Math.max(0, (guest.accommodation?.roomsNeeded || 0) - 1))}
+                                                            className="w-8 h-8 rounded-full border border-slate-200 text-slate-400"
+                                                        >
+                                                            −
+                                                        </button>
+                                                        <span className="w-4 text-center font-sans font-bold">
+                                                            {guest.accommodation?.roomsNeeded || 0}
+                                                        </span>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => handleNestedUpdate('accommodation', 'roomsNeeded', (guest.accommodation?.roomsNeeded || 0) + 1)}
+                                                            className="w-8 h-8 rounded-full border border-slate-200 text-slate-400"
+                                                        >
+                                                            +
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </section>
                             </div>
-                        </section >
+                        )}
 
                         <div className="pt-8 pt-6">
                             <button
